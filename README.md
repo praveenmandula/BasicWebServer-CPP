@@ -1,5 +1,6 @@
 # BasicWebServer-CPP
-Basic project to learn WebServer concepts using CPP or C++ ( handling httpRequest, Authentication other WebServer concepts )
+This project is created to learn WebServer concepts using CPP or C++ 
+( handling httpRequest, Authentication other WebServer concepts ) without any third party softwares
 
 Project Details
 ----------------
