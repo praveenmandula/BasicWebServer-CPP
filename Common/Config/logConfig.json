@@ -1,0 +1,6 @@
+{
+    "logLevel": "DEBUG",
+    "enableConsoleLogging": true,
+    "enableFileLogging": true,
+    "logFilePath": "SimpleWebServerLog.txt"
+}

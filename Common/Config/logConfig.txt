@@ -1,0 +1,4 @@
+logLevel=INFO
+enableConsoleLogging=true
+enableFileLogging=true
+logFilePath=SimpleWebServerLog.txt

@@ -112,7 +112,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "..\common\WebHostedFiles" "$(SolutionDir)$(Platform)\$(Configuration)\WebHostedFiles" /E /I /Y</Command>
+      <Command>xcopy "..\common\WebHostedFiles" "$(SolutionDir)$(Platform)\$(Configuration)\WebHostedFiles" /E /I /Y
+xcopy "..\common\Config" "$(SolutionDir)$(Platform)\$(Configuration)\Config" /E /I /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,7 +124,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Common;..\ConfigManager;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common;..\ConfigManager;..\LogTrace;..\;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +133,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "..\common\WebHostedFiles" "$(SolutionDir)$(Platform)\$(Configuration)\WebHostedFiles" /E /I /Y
+xcopy "..\common\Config" "$(SolutionDir)$(Platform)\$(Configuration)\Config" /E /I /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicWebServer.cpp" />

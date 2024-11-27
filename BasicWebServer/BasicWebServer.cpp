@@ -14,6 +14,7 @@ void BasicWebServer::handleClientRequest(SOCKET clientSocket)
     // GetData from the client using client socket
     std::string received_data;
     m_tcpSocketHanderPtr->recvDataOnSocket(clientSocket, received_data);
+
     LogMessage(LogLevel::DEBUG, "Received client data = ", received_data);
 
     // parseHttpRequest - will parse raw client data into user defined HttpRequest structure
@@ -68,9 +69,8 @@ int BasicWebServer::acceptConnections()
 void BasicWebServer::registerHttpRouteCallbacks()
 {
     // Initialize callback routes, any additional route need to be added here
-
-    ADD_HTTP_ROUTE_CALLBACK("/", handleWelcomePage);
+    ADD_HTTP_ROUTE_CALLBACK("/",      handleWelcomePage);
     ADD_HTTP_ROUTE_CALLBACK("/login", handleUserLogin);
     ADD_HTTP_ROUTE_CALLBACK("/registration", handleUserRegistration);
-    ADD_HTTP_ROUTE_CALLBACK("/upload", handleFileUpload);
+    ADD_HTTP_ROUTE_CALLBACK("/upload",handleFileUpload);
 }

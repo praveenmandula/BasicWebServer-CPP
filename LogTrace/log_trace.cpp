@@ -7,7 +7,7 @@ Logger& Logger::getInstance() {
 }
 
 Logger::Logger() {
-    readLogConfig("logConfig.json");
+    readLogConfig("Config/logConfig.json");
 }
 
 Logger::~Logger() {
