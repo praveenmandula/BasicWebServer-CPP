@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginUI">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Login">
+        </form>
+        <div id="LoginFailureMessage" style="display: none; color: red;">
+            <!-- Success message will be displayed here -->
+            Login failed!!
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            // login function execution
+            $(document).ready(function () {
+                // Login form submission
+                $("#loginForm").submit(function (event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // serialize form data
+                    var formData = $(this).serialize();
+
+                    // post call to the server, reponse will be also handled here
+                    $.ajax({
+                        type: "POST",
+                        url: "login",
+                        data: formData,
+                        success: function (response) {
+                            // Handle success response
+                            // 'response' contains the HTML page returned by the server
+                            $('body').html(response); // Replace the entire body content with the response HTML
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Login Failed, please check the credentials!");
+                            // Display Failure message
+                            LoginFailureMessage.style.display = "block"; // Show success message
+                            setTimeout(function () {
+                                LoginFailureMessage.style.display = "none"; // Hide success message after 3 seconds
+                            }, 3000);
+                        }
+                    });
+                });
+            });
+        </script>
+        <p>Don't have an account? <a href="#" onclick="showForm('registerUI')">Register here</a></p>
+    </div>
+
+    <div class="container" id="registerUI" style="display:none;">
+        <h2>User Registration</h2>
+        <form id="registerForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Register">
+        </form>
+        <div id="RegistrationSuccessMessage" style="display: none; color: green;">
+            <!-- Success message will be displayed here -->
+            Registration successfully done!
+        </div>
+        <div id="RegistrationFailureMessage" style="display: none; color: red;">
+            <!-- Success message will be displayed here -->
+            Registration failed!
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            // Registration form submission
+            $(document).ready(function (event) {
+                $("#registerForm").submit(function (event) {
+                    event.preventDefault();
+                    var formData = $(this).serialize();
+                    $.ajax({
+                        url: "registration",
+                        type: "POST",
+                        data: formData,
+                        success: function (response) {
+
+                            alert("Registration succesfully done!");
+                            // Display success message
+                            RegistrationSuccessMessage.style.display = "block"; // Show success message
+                            setTimeout(function () {
+                                RegistrationSuccessMessage.style.display = "none"; // Hide success message after 3 seconds
+                            }, 3000);
+                        },
+                        error: function (xhr, status, error) {
+
+                            alert("Registration Failed, please check if user/email already got registered!");
+                            // Display Failure message
+                            RegistrationFailureMessage.style.display = "block"; // Show success message
+                            setTimeout(function () {
+                                RegistrationFailureMessage.style.display = "none"; // Hide success message after 3 seconds
+                            }, 3000);
+                        }
+                    });
+                });
+            });
+        </script>
+        <p>Already have an account? <a href="#" onclick="showForm('loginUI')">Login here</a></p>
+    </div>
+    <script>
+        function showForm(formId) {
+            document.getElementById('loginUI').style.display = 'none';
+            document.getElementById('registerUI').style.display = 'none';
+            document.getElementById(formId).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
