@@ -38,17 +38,16 @@ private:
 	typedef std::function<HttpStreamHandler::HttpResponse(HttpStreamHandler::HttpRequest& request)> RouteCallbackFunction;
 	typedef std::unordered_map<std::string, RouteCallbackFunction> RoutCallBackHandlersMap;
 	RoutCallBackHandlersMap m_RouteCallbackHandlers;
-	
-	HttpRouteCallBackHanlder m_HttpRouteCallBackHandler;
+	HttpRouteCallBackHandler m_HttpRouteCallBackHandler;
 
 	// Helper Macro for the Http Route Callbacks
-#define ADD_HTTP_ROUTE_CALLBACK(route,methodName) \
-      m_RouteCallbackHandlers.emplace(route,std::bind(&HttpRouteCallBackHanlder::methodName, std::ref(m_HttpRouteCallBackHandler), std::placeholders::_1))
+    #define ADD_HTTP_ROUTE_CALLBACK(route,methodName) \
+    m_RouteCallbackHandlers.emplace(route,std::bind(&HttpRouteCallBackHandler::methodName, std::ref(m_HttpRouteCallBackHandler), std::placeholders::_1))
 
-	// socket handling
+	// Handles low level socket implementation
 	std::unique_ptr<TcpSocketHandler>  m_tcpSocketHanderPtr;
 
-	// http stream handling
+	// Handles parsing and generating http streams
 	HttpStreamHandler m_httpStreamHandler;
 
 	// Main asyncronous thread which will get invoked whenever there is new request from client

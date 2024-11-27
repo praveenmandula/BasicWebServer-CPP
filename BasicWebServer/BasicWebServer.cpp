@@ -68,7 +68,7 @@ int BasicWebServer::acceptConnections()
 
 void BasicWebServer::registerHttpRouteCallbacks()
 {
-    // Initialize callback routes, any additional route need to be added here
+    // Add Http Route Callback Routes, any additional route need to be added here
     ADD_HTTP_ROUTE_CALLBACK("/",      handleWelcomePage);
     ADD_HTTP_ROUTE_CALLBACK("/login", handleUserLogin);
     ADD_HTTP_ROUTE_CALLBACK("/registration", handleUserRegistration);

@@ -4,7 +4,7 @@
  */
 #include "HttpRouteCallBackHandler.h"
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleWelcomePage(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(HttpStreamHandler::HttpRequest request)
 {
     HttpStreamHandler::HttpResponse response;
     std::string htmlStringData;
@@ -70,7 +70,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleWelcomePage(Http
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleUserRegistration(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserRegistration(HttpStreamHandler::HttpRequest request)
 {
     HttpStreamHandler::HttpResponse response;
 
@@ -100,7 +100,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleUserRegistration
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleUserLogin(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpStreamHandler::HttpRequest request)
 {
     HttpStreamHandler::HttpResponse response; 
 
@@ -166,7 +166,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleUserLogin(HttpSt
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleFileUpload(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpStreamHandler::HttpRequest request)
 {
     HttpStreamHandler::HttpResponse response;
     // Validate user login
@@ -223,7 +223,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHanlder::handleFileUpload(HttpS
     return response;
 }
 
-int HttpRouteCallBackHanlder::saveFile(const std::string& filename, const std::string& fileData) {
+int HttpRouteCallBackHandler::saveFile(const std::string& filename, const std::string& fileData) {
     std::ofstream file(filename, std::ios::binary);
     if (file.is_open()) {
         file.write(fileData.c_str(), fileData.size());
@@ -236,7 +236,7 @@ int HttpRouteCallBackHanlder::saveFile(const std::string& filename, const std::s
     return 0;
 }
 
-std::string HttpRouteCallBackHanlder::getFilenameFromHeaders(const std::string& headers) {
+std::string HttpRouteCallBackHandler::getFilenameFromHeaders(const std::string& headers) {
     // Extract filename from headers (for demonstration, we'll assume it's in a header)
     std::string filename = "uploaded_file.bin";  // Default filename
     size_t pos = headers.find("filename=");

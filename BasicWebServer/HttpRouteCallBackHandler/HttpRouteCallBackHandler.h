@@ -13,7 +13,7 @@
 //Web Server related includes
 #include "BasicWebServer/SessionManagement/session_manager.h"
 
-class HttpRouteCallBackHanlder {
+class HttpRouteCallBackHandler {
 public:
 	// Declare and implement callback method for requested http routes
 	HttpStreamHandler::HttpResponse handleWelcomePage(HttpStreamHandler::HttpRequest request);

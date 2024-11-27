@@ -16,19 +16,18 @@ int main(int argc, char* argv[]) {
     // Access and use the arguments
     int tcp_server_port = atoi(argv[1]);
 
-    // Print out the arguments
-    LogMessage(LogLevel::INFO, " Provided Server PORT : ", tcp_server_port);
-
     // Create Basic Webserver instance with specified port
     BasicWebServer server(tcp_server_port);
 
     // Register Callbacks
-    // Here we need to register our callback method for the routes required
+    // Here we need to register our callback method for the http routes
     server.registerHttpRouteCallbacks();
 
-    // Accept Connections -> WebServer will be waiting on loop here
-    // Client incoming request will get parse and appropriate callback gets called
-    // And sends back responses to the client
+    // Print Server listening on this port message
+    LogMessage(LogLevel::INFO, "Server listening on PORT : ", tcp_server_port);
+
+    // Accept Connections , BasicWebServer will be on Infinite loop here
+    // Client incoming request will get parse and appropriate Callback will get called
     server.acceptConnections();
 
     return 0;
