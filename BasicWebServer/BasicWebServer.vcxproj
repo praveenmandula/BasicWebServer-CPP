@@ -139,14 +139,14 @@ xcopy "..\common\Config" "$(SolutionDir)$(Platform)\$(Configuration)\Config" /E 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BasicWebServer.cpp" />
-    <ClCompile Include="HttpRouteCallBackHandler\HttpRouteCallBackHandler.cpp" />
-    <ClCompile Include="BasicWebServerMain.cpp" />
+    <ClCompile Include="basic_webserver.cpp" />
+    <ClCompile Include="HttpRouteCallBackHandler\http_route_callback_handler.cpp" />
+    <ClCompile Include="basic_webserver_main.cpp" />
     <ClCompile Include="SessionManagement\session_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicWebServer.h" />
-    <ClInclude Include="HttpRouteCallBackHandler\HttpRouteCallBackHandler.h" />
+    <ClInclude Include="basic_webserver.h" />
+    <ClInclude Include="HttpRouteCallBackHandler\http_route_callback_handler.h" />
     <ClInclude Include="SessionManagement\session_manager.h" />
   </ItemGroup>
   <ItemGroup>

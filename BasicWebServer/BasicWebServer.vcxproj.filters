@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicWebServer.cpp">
+    <ClCompile Include="basic_webserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SessionManagement\session_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HttpRouteCallBackHandler\HttpRouteCallBackHandler.cpp">
+    <ClCompile Include="HttpRouteCallBackHandler\http_route_callback_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicWebServerMain.cpp">
+    <ClCompile Include="basic_webserver_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicWebServer.h">
+    <ClInclude Include="basic_webserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HttpRouteCallBackHandler\HttpRouteCallBackHandler.h">
+    <ClInclude Include="HttpRouteCallBackHandler\http_route_callback_handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SessionManagement\session_manager.h">
