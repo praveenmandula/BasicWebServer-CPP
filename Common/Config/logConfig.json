@@ -2,5 +2,5 @@
     "logLevel": "INFO",
     "enableConsoleLogging": true,
     "enableFileLogging": false,
-    "logFilePath": "SimpleWebServerLog.txt"
+    "logFilePath": "BasicWebServerLog.txt"
 }
