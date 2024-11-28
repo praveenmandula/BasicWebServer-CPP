@@ -170,6 +170,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
 {
     HttpStreamHandler::HttpResponse response;
     // Validate user login
+    LogMessage(LogLevel::INFO, __func__);
     LogMessage(LogLevel::DEBUG, "handleFileUpload got called,Request details :",request.body);
 
     // Default filename and file type

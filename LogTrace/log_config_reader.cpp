@@ -95,7 +95,7 @@ int LogConfigReader::parseKeyValueConfig(const std::string& filePath)
 {
     std::ifstream file(filePath);
     if (!file.is_open()) {
-        throw std::runtime_error("Could not open key-value config file.");
+        LogMessage(LogLevel::ERROR_R, "Failed to open config log file : ", filePath);
     }
 
     std::string line;

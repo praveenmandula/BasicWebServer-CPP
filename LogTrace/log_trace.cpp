@@ -22,14 +22,14 @@ void Logger::readLogConfig(const char* configFilePath) {
     m_logConfigReader.readConfiguration(configFilePath);
 
     logLevelThreshold       =   stringToLogLevel(m_logConfigReader.getKeyValue("logLevel"));
-    consoleEnabled          =   (m_logConfigReader.getKeyValue("enableConsoleLogging") == "true") ? true : true;
+    consoleEnabled          =   (m_logConfigReader.getKeyValue("enableConsoleLogging") == "true") ? true : false;
     fileEnabled             =   (m_logConfigReader.getKeyValue("enableFileLogging") == "true") ? true : false;
     logFilePath             =   m_logConfigReader.getKeyValue("logFilePath");
 
     if (fileEnabled) {
         fileStream = std::make_unique<std::ofstream>(logFilePath, std::ios::app);
         if (!fileStream->is_open()) {
-            throw std::runtime_error("Failed to open log file.");
+            LogMessage(LogLevel::ERROR_R, "Failed to open config log file : ", configFilePath);
         }
     }
 }
