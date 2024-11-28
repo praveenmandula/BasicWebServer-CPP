@@ -9,7 +9,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
     HttpStreamHandler::HttpResponse response;
     std::string htmlStringData;
 
-    LogMessage(LogLevel::DEBUG, "handleWelcomePage got called ");
+    LogMessage(LogLevel::INFO, __func__);
 
     std::string sessionIDCookie;
 
@@ -22,10 +22,11 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
     });
 
     if (it != request.headers.end()) {
+        LogMessage(LogLevel::INFO, "Session Found");
         sessionIDCookie = it->second;
     }
     else {
-        LogMessage(LogLevel::DEBUG, "Pair with value ", searchString ," not found");
+        LogMessage(LogLevel::INFO, "Session Not Found");
     }
 
     std::string sessionID = m_httpStreamHandler.extractSessionIDFromCookie(sessionIDCookie);
@@ -33,7 +34,6 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
 
     if (!sessionID.empty()) {
         sessionID.pop_back();
-
         sessionAvailable = m_sessionMgr.isSessionAvailable(sessionID);
     }
 
@@ -74,7 +74,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserRegistration
 {
     HttpStreamHandler::HttpResponse response;
 
-    LogMessage(LogLevel::ERROR_R,"handleUserRegistration got called");
+    LogMessage(LogLevel::INFO, __func__);
     LogMessage(LogLevel::DEBUG,"Request body = ",request.body);
 
     HttpStreamHandler::userRegistrationData userRegData = m_httpStreamHandler.parseUserRegistrationRequest(request.body);
@@ -104,7 +104,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
 {
     HttpStreamHandler::HttpResponse response; 
 
-    LogMessage(LogLevel::DEBUG, "handleUserLogin got called");
+    LogMessage(LogLevel::INFO, __func__);
     LogMessage(LogLevel::DEBUG, request.body);
 
     if (request.body.empty())
@@ -145,7 +145,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
             response.body = htmlStringData;
         }
         else {
-        	LogMessage(LogLevel::DEBUG, "login success page not found");
+        	LogMessage(LogLevel::ERROR_R, "login success page not found");
             std::string body;
             body.append("login success page not found");
             body.append("\n");
@@ -207,7 +207,6 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
         filetype = "application/octet-stream"; // Default if not provided
     }
 
-    //std::cout << "FileName = " << filename << std::endl;
     LogMessage(LogLevel::INFO,"FileName = " , filename);
     int ret = saveFile(filename,request.body);
     if( ret == 0 ) {
@@ -228,10 +227,10 @@ int HttpRouteCallBackHandler::saveFile(const std::string& filename, const std::s
     if (file.is_open()) {
         file.write(fileData.c_str(), fileData.size());
         file.close();
-        std::cout << "File saved as " << filename << std::endl;
+        LogMessage(LogLevel::INFO, "File saved as ", filename);
     } else {
+        LogMessage(LogLevel::ERROR_R, "Failed to open file for writing, filename = ", filename);
     	return -1;
-        std::cerr << "Failed to open file for writing" << std::endl;
     }
     return 0;
 }

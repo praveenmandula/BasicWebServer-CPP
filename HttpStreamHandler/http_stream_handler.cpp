@@ -153,15 +153,15 @@ void HttpStreamHandler::testParseHttpRequestMethod()
 
     HttpRequest httpRequest = parseHttpRequest(httpRequestString);
 
-    // Print parsed request
-    std::cout << "Method: " << httpRequest.method << std::endl;
-    std::cout << "Path: " << httpRequest.path << std::endl;
-    std::cout << "Version: " << httpRequest.version << std::endl;
-    std::cout << "Headers:" << std::endl;
+    // Print parse httpRequest information
+    LogMessage(LogLevel::DEBUG, "Method = ", httpRequest.method);
+    LogMessage(LogLevel::DEBUG, "Path = ", httpRequest.path);
+    LogMessage(LogLevel::DEBUG, "Version = ", httpRequest.version);
+    LogMessage(LogLevel::DEBUG, "Headers = ");
     for (const auto& header : httpRequest.headers) {
-        std::cout << header << std::endl;
+        LogMessage(LogLevel::DEBUG, header.first , "  " , header.second);
     }
-    std::cout << "Body: " << httpRequest.body << std::endl;
+    LogMessage(LogLevel::DEBUG, "Body = ", httpRequest.body);
 #endif
 }
 

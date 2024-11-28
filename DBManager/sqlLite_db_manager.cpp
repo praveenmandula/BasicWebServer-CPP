@@ -14,7 +14,7 @@ SQLLiteDBManager::SQLLiteDBManager()
         LogMessage(LogLevel::ERROR_R, " Unable to Open Database: ", (char*)sqlite3_errmsg(sqlLiteDBInstance));
     }
     else {
-        LogMessage(LogLevel::DEBUG, " Opened Database Successfully ");
+        LogMessage(LogLevel::INFO, " Opened Database Successfully ");
     }
 
     // Create USERS table
@@ -104,7 +104,7 @@ int SQLLiteDBManager::testSqlLiteDBLibrary()
     // Open database
     rc = sqlite3_open("test.db", &db);
     if (rc) {
-        LogMessage(LogLevel::DEBUG, " Unable to OpenDatabase: ", (char*)sqlite3_errmsg(db));
+        LogMessage(LogLevel::ERROR_R, " Unable to OpenDatabase: ", (char*)sqlite3_errmsg(db));
         return 1;
     }
 
@@ -116,7 +116,7 @@ int SQLLiteDBManager::testSqlLiteDBLibrary()
         sqlite3_free(zErrMsg);
     }
     else {
-        LogMessage(LogLevel::DEBUG, " Table Created Successfully ");
+        LogMessage(LogLevel::INFO, " Table Created Successfully ");
     }
 
     // Close database

@@ -19,15 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="log_config_reader.h" />
     <ClInclude Include="log_trace.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="log_config_reader.cpp" />
     <ClCompile Include="log_trace.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConfigManager\ConfigManager.vcxproj">
-      <Project>{7efc58cc-da9b-4d51-99d9-2c1ab76fd318}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -123,7 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Common;..\ConfigManager</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -142,7 +139,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Common;..\ConfigManager</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

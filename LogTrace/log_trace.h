@@ -1,6 +1,9 @@
 #pragma once
 #include "cpp_standard_includes.h"
-#include "config_manager.h"
+#include "log_config_reader.h"
+
+// Shared DLL support, Enable this and Change project type to DLL to generate DLL
+// LOGGER_API - Add to the class
 
 //#if defined(_WIN32) || defined(_WIN64)
 //#ifdef LOGTRACE_EXPORTS
@@ -41,21 +44,20 @@ private:
     Logger& operator=(const Logger&) = delete; // Prevent assignment
     ~Logger();
 
-    std::mutex logMutex;            // Mutex for thread-safety
+    std::mutex logMutex;    // Mutex for thread-safety
     std::unique_ptr<std::ofstream> fileStream;
 
     // LogConfigurationDetails
     LogLevel logLevelThreshold;
-    bool consoleEnabled;
-    bool fileEnabled;
+    bool     consoleEnabled;
+    bool     fileEnabled;
     std::string logFilePath;
 
     void readLogConfig(const char* configFilePath);
     LogLevel stringToLogLevel(const std::string& level) const;
     std::string toString(LogLevel level) const;
 
-    ConfigManager::LogConfigReader m_logConfigReader;
-    
+    LogConfigReader m_logConfigReader;  
 };
 
 // Helper Macro for logging message

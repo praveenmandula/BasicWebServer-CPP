@@ -45,8 +45,6 @@ void BasicWebServer::handleClientRequest(SOCKET clientSocket)
 
 int BasicWebServer::acceptConnections()
 {
-    //LogMessage(LogLevel::INFO, "Server listening on : ", m_tcpSocketHanderPtr->getServerPort());
-
     while (true)
     {
         // acceptConnectionsFromClients will return client socket when client gets connected

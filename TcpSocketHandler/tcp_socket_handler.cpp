@@ -5,6 +5,7 @@ TcpSocketHandler::TcpSocketHandler(int port)
 {
 	m_port = port;
 
+    // socket initialization
 	createSocket(); 
     bindSocket(); 
     listenSocket();
@@ -17,11 +18,11 @@ SOCKET TcpSocketHandler::acceptConnections()
 
     SOCKET client_socket = accept(m_server_socket, (struct sockaddr*)&client_address, &client_addr_size);
     if (client_socket == INVALID_SOCKET) {
-        std::cerr << "Accepting client connection failed." << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Accepting client connection failed");
         return INVALID_SOCKET;
     }
     // Print client received Address 
-    //LogMessage(LogLevel::INFO, "Client Request Received : : ", inet_ntoa(client_address.sin_addr));
+    //LogMessage(LogLevel::DEBUG, "Requested Client Address : : ", inet_ntop(client_address.sin_addr));
 
     return client_socket;
 }
@@ -67,13 +68,13 @@ int TcpSocketHandler::createSocket()
 #ifdef _WIN32
     WSADATA wsa_data;
     if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
-        std::cerr << "Error: WSAStartup failed" << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Error: WSAStartup failed");
         return 1;
     }
 #endif
     m_server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (m_server_socket == INVALID_SOCKET) {
-        std::cerr << "Error: Could not create socket" << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Error: Could not create socket");
         return 1;
     }
     return 0;
@@ -86,7 +87,7 @@ int TcpSocketHandler::bindSocket()
     server_address.sin_port          =   htons(m_port); // Port number
 
     if (bind(m_server_socket, (struct sockaddr*)&server_address, sizeof(server_address)) < 0) {
-        std::cerr << "Error: Bind failed" << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Error: Bind failed");
         return 1;
     }
     return 0;
@@ -95,7 +96,7 @@ int TcpSocketHandler::bindSocket()
 int TcpSocketHandler::listenSocket()
 {
     if (listen(m_server_socket, 3) < 0) {
-        std::cerr << "Error: Listen failed" << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Error: Listen failed");
         return 1;
     }
     return 0;

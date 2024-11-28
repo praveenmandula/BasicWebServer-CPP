@@ -5,8 +5,6 @@ VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicWebServer", "BasicWebServer\BasicWebServer.vcxproj", "{4E681258-4272-47B0-A718-1FC790012CE8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConfigManager", "ConfigManager\ConfigManager.vcxproj", "{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogTrace", "LogTrace\LogTrace.vcxproj", "{709CFF33-B16B-4C25-9D59-B22A8F4EAAC5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TcpSocketHandler", "TcpSocketHandler\TcpSocketHandler.vcxproj", "{778CFD4E-54A6-43CA-9320-A218E1BADB74}"
@@ -33,14 +31,6 @@ Global
 		{4E681258-4272-47B0-A718-1FC790012CE8}.Release|x64.Build.0 = Release|x64
 		{4E681258-4272-47B0-A718-1FC790012CE8}.Release|x86.ActiveCfg = Release|Win32
 		{4E681258-4272-47B0-A718-1FC790012CE8}.Release|x86.Build.0 = Release|Win32
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Debug|x64.ActiveCfg = Debug|x64
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Debug|x64.Build.0 = Debug|x64
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Debug|x86.ActiveCfg = Debug|Win32
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Debug|x86.Build.0 = Debug|Win32
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Release|x64.ActiveCfg = Release|x64
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Release|x64.Build.0 = Release|x64
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Release|x86.ActiveCfg = Release|Win32
-		{7EFC58CC-DA9B-4D51-99D9-2C1AB76FD318}.Release|x86.Build.0 = Release|Win32
 		{709CFF33-B16B-4C25-9D59-B22A8F4EAAC5}.Debug|x64.ActiveCfg = Debug|x64
 		{709CFF33-B16B-4C25-9D59-B22A8F4EAAC5}.Debug|x64.Build.0 = Debug|x64
 		{709CFF33-B16B-4C25-9D59-B22A8F4EAAC5}.Debug|x86.ActiveCfg = Debug|Win32

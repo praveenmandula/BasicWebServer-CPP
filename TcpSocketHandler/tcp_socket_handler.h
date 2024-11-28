@@ -1,5 +1,6 @@
 #pragma once
 #include "cpp_standard_includes.h"
+#include "LogTrace/log_trace.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <winsock2.h>
@@ -35,7 +36,6 @@ private:
 	int bindSocket();
 	int listenSocket();
 	
-
 	SOCKET m_server_socket = INVALID_SOCKET;
 	sockaddr_in server_address{};
 	int m_port;

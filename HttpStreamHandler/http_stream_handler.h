@@ -4,6 +4,7 @@
  */
 #pragma once
 #include "cpp_standard_includes.h"
+#include "LogTrace/log_trace.h"
 
  /**
  HttpStream Handler is used to simplify httpRequest and httpResponse to the users
