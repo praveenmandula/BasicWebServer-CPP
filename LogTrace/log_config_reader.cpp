@@ -1,4 +1,5 @@
 #include "log_config_reader.h"
+#include "log_trace.h"
 
 int LogConfigReader::readConfiguration(std::string& filePath)
 {
@@ -43,9 +44,8 @@ int LogConfigReader::parseJsonConfig(const std::string& filePath)
 {
     std::ifstream file(filePath);
     if (!file.is_open()) {
-        //throw std::runtime_error("Could not open JSON config file.");
-        //std::cerr << "Error code: " << errno << " (" << std::strerror(errno) << ")" << std::endl;
-        return errno;
+        LogMessage(LogLevel::ERROR_R, "Could not open config file:", filePath);
+        return -1;
     }
     nlohmann::json config;
     file >> config;
@@ -66,7 +66,7 @@ int LogConfigReader::parseJsonConfig(const std::string& filePath)
             m_logConfigData[key] = "null";  // Optionally handle null values
         }
         else {
-            std::cerr << "Unsupported type for key: " << key << std::endl;
+            LogMessage(LogLevel::ERROR_R, "Configuration key not found");
         }
     }
     return 1;

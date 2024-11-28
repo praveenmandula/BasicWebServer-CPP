@@ -1,5 +1,6 @@
 #pragma once
 #include "cpp_standard_includes.h"
+#include "LogTrace/log_trace.h"
 
 /*
  * Author: Praveen Mandula

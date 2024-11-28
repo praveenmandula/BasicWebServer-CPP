@@ -155,7 +155,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
         }
     }
     else {
-    	LogMessage(LogLevel::DEBUG, "Invalid Credentials");
+        LogMessage(LogLevel::ERROR_R, "Invalid Credentials");
         std::string body;
         body.append("Invalid Credentials");
         body.append("\n");

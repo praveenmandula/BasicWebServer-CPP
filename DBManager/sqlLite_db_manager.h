@@ -1,6 +1,6 @@
 #pragma once
 #include "cpp_standard_includes.h"
-#include "log_trace.h"
+#include "LogTrace/log_trace.h"
 #include "sqlite3.h"
 
 class SQLLiteDBManager {

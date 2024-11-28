@@ -6,7 +6,7 @@ int HtmlReader::readHtmlContentFromFile(const std::string& htmlFileName, std::st
 {
     std::ifstream file(htmlFileName);
     if (!file.is_open()) {
-        std::cerr << "Error opening file: " << htmlFileName << std::endl;
+        LogMessage(LogLevel::ERROR_R, "Error opening html file: ", htmlFileName);
         return -1;
     }
 

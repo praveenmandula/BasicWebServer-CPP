@@ -112,7 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Common;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common;..\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Common;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common;..\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,6 +147,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="html_reader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogTrace\LogTrace.vcxproj">
+      <Project>{709cff33-b16b-4c25-9d59-b22a8f4eaac5}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,10 +11,10 @@ SQLLiteDBManager::SQLLiteDBManager()
     // Open database (create if not exists)
     int rc = sqlite3_open("test.db", &sqlLiteDBInstance);
     if (rc) {
-        LogMessage(LogLevel::ERROR_R, " Unable to Open Database: ", (char*)sqlite3_errmsg(sqlLiteDBInstance));
+        LogMessage(LogLevel::ERROR_R, "Unable to Open Database: ", (char*)sqlite3_errmsg(sqlLiteDBInstance));
     }
     else {
-        LogMessage(LogLevel::INFO, " Opened Database Successfully ");
+        LogMessage(LogLevel::INFO, "Opened Database Successfully ");
     }
 
     // Create USERS table
@@ -39,7 +39,7 @@ int SQLLiteDBManager::insertIntoUsersTable(UsersTableData& dataToInsert)
     // Prepare SQL Statement
     rc = sqlite3_prepare_v2(sqlLiteDBInstance, InsertStatementString.c_str(), -1, &stmt, nullptr);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << sqlite3_errmsg(sqlLiteDBInstance) << std::endl;
+        LogMessage(LogLevel::ERROR_R, "SQL error while inserting UsersData: ",sqlite3_errmsg(sqlLiteDBInstance));
         return -1;
     }
 
@@ -51,7 +51,7 @@ int SQLLiteDBManager::insertIntoUsersTable(UsersTableData& dataToInsert)
     // Execute Statement
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
-        std::cerr << "SQL error: " << sqlite3_errmsg(sqlLiteDBInstance) << std::endl;
+        LogMessage(LogLevel::ERROR_R, "SQL error while executing statement: ", sqlite3_errmsg(sqlLiteDBInstance));
         return -1;
     }
 
@@ -68,7 +68,7 @@ bool SQLLiteDBManager::verifyUserInformation(UsersTableData& dataToVerify)
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(sqlLiteDBInstance, sql.c_str(), -1, &stmt, nullptr);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << sqlite3_errmsg(sqlLiteDBInstance) << std::endl;
+        LogMessage(LogLevel::ERROR_R, "SQL error while preparing statement: ", sqlite3_errmsg(sqlLiteDBInstance));
         sqlite3_close(sqlLiteDBInstance);
         return false;
     }
@@ -112,7 +112,7 @@ int SQLLiteDBManager::testSqlLiteDBLibrary()
     const char* sql = "CREATE TABLE IF NOT EXISTS MyTable (ID INT, Name TEXT);";
     rc = sqlite3_exec(db, sql, 0, 0, &zErrMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        LogMessage(LogLevel::ERROR_R, "SQL error while creating Table: ", zErrMsg);
         sqlite3_free(zErrMsg);
     }
     else {
