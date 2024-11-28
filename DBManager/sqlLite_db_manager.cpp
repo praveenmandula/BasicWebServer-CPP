@@ -1,8 +1,8 @@
 /*
  * Author: Praveen Mandula
- * Date: 2024-10-30
+ * Date: 10/30/2024
+ * Description : SQLLiteDBManager class is used for preparing and executing sqlLite db queries
  */
-
 #include "sqlLite_db_manager.h"
 
 SQLLiteDBManager::SQLLiteDBManager()

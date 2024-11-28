@@ -1,8 +1,8 @@
 /*
  * Author: Praveen Mandula
- * Date: 2024-10-30
+ * Date: 11/04/2024
+ * Description : HttpStreamHandler class is used for converting client request raw data into userdefined HttpRequest and viceversa
  */
-
 #include "http_stream_handler.h"
 
 HttpStreamHandler::HttpRequest HttpStreamHandler::parseHttpRequest(const std::string& requestString)

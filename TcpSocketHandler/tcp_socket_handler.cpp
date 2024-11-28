@@ -1,3 +1,8 @@
+/*
+ * Author: Praveen Mandula
+ * Date: 11/18/2024
+ * Description : TcpSocketHandler class is used for low level socket communication using windows/linux api's
+ */
 #include "tcp_socket_handler.h"
 
 // public methods

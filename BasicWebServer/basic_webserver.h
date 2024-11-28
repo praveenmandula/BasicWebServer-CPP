@@ -1,9 +1,4 @@
 #pragma once
-/*
- * Author: Praveen Mandula
- * Date: 2024-10-30
- */
-
  // common cpp includes
 #include "cpp_standard_includes.h"
 
@@ -21,7 +16,7 @@
 
 /**
 BasicWebServer class is used to create a webserver on a specified port using TcpSocketHandler class
-BasicWebServer user need to register callback handlers for the requested routes using webServerCallBackHandlers class methods
+BasicWebServer user need to register callback handlers for the requested routes using HttpRouteCallbackHandlers class methods
 BasicWebServer will call appropriate callback handler based on requested route from the client
 **/
 

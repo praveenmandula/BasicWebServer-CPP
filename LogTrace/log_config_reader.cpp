@@ -1,3 +1,8 @@
+/*
+ * Author: Praveen Mandula
+ * Date: 11/14/2024
+ * Description : LogConfigReader class is used for reading configuration from .json,*.txt,*.ini or .xml file
+ */
 #include "log_config_reader.h"
 #include "log_trace.h"
 

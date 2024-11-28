@@ -1,8 +1,3 @@
-/*
- * Author: Praveen Mandula
- * Date: 2024-10-30
- */
-
 #pragma once
 // Declare static library header references
 #include "HttpStreamHandler/http_stream_handler.h"

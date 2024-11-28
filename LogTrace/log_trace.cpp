@@ -1,4 +1,8 @@
-// logger.cpp
+/*
+ * Author: Praveen Mandula
+ * Date: 11/15/2024
+ * Description : Logger class is used for logging debug messages into Console or File based on logConfiguration
+ */
 #include "log_trace.h"
 
 Logger& Logger::getInstance() {

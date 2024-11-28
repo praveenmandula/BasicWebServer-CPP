@@ -1,8 +1,8 @@
 /*
  * Author: Praveen Mandula
- * Date: 2024-10-30
+ * Date: 11/21/2024
+ * Description : SessionManager class is used to validate/create sessions for the particular user
  */
-
 #include "session_manager.h"
 
 std::string SessionManager::CreateSession(const std::string& userId)

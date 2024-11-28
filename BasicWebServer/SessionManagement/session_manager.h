@@ -1,7 +1,3 @@
-/*
- * Author: Praveen Mandula
- * Date: 2024-10-30
- */
 #pragma once
 #include "cpp_standard_includes.h"
 
