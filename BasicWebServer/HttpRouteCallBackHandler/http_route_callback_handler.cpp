@@ -23,11 +23,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
     });
 
     if (it != request.headers.end()) {
-        LogMessage(LogLevel::INFO, "Session Found");
         sessionIDCookie = it->second;
-    }
-    else {
-        LogMessage(LogLevel::INFO, "Session Not Found");
     }
 
     std::string sessionID = m_httpStreamHandler.extractSessionIDFromCookie(sessionIDCookie);
@@ -42,9 +38,11 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
 
     // if sessionAvailable No Need to send login page, directly send WelcomePage
     if (sessionAvailable) {
+        LogMessage(LogLevel::INFO, "Session available,Skipping login");
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/FileUpload.htm", htmlStringData);
     }
     else {
+        LogMessage(LogLevel::INFO, "Session not available,Login before starting uploading");
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/WelcomePageAjax.htm", htmlStringData);
     }
     
@@ -124,9 +122,11 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
     verifyUser  =  m_sqlLiteDBManager.verifyUserInformation(usersData);
 
     if (verifyUser) {
+        LogMessage(LogLevel::ERROR_R, "Login Success");
         // create sessionID for this user and send the sessionID in response
         std::string sessionID = m_sessionMgr.CreateSession(usersData.userName);
         if (!sessionID.empty()) {
+            LogMessage(LogLevel::ERROR_R, "Session Created for the User - ", usersData.userName);
             response.headers.insert(std::make_pair("Set-Cookie: session_id=", sessionID));
         }
 
