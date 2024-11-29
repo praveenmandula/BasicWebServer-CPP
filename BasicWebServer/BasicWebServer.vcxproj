@@ -142,11 +142,13 @@ xcopy "..\common\Config" "$(SolutionDir)$(Platform)\$(Configuration)\Config" /E 
     <ClCompile Include="basic_webserver.cpp" />
     <ClCompile Include="HttpRouteCallBackHandler\http_route_callback_handler.cpp" />
     <ClCompile Include="basic_webserver_main.cpp" />
+    <ClCompile Include="helper_methods.cpp" />
     <ClCompile Include="SessionManagement\session_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_webserver.h" />
     <ClInclude Include="HttpRouteCallBackHandler\http_route_callback_handler.h" />
+    <ClInclude Include="helper_methods.h" />
     <ClInclude Include="SessionManagement\session_manager.h" />
   </ItemGroup>
   <ItemGroup>

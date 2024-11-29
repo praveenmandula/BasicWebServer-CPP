@@ -12,27 +12,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
 
     LogMessage(LogLevel::INFO, __func__);
 
-    std::string sessionIDCookie;
-
-    // String to search for
-    std::string searchString = "Cookie";
-
-    // Find the pair with the given value in the vector
-    auto it = std::find_if(request.headers.begin(), request.headers.end(), [&](const auto& pair) {
-        return pair.first == searchString;
-    });
-
-    if (it != request.headers.end()) {
-        sessionIDCookie = it->second;
-    }
-
-    std::string sessionID = m_httpStreamHandler.extractSessionIDFromCookie(sessionIDCookie);
-    bool sessionAvailable = false;
-
-    if (!sessionID.empty()) {
-        sessionID.pop_back();
-        sessionAvailable = m_sessionMgr.isSessionAvailable(sessionID);
-    }
+    bool sessionAvailable = checkIfSessionExists(request);
 
     int ret;
 
@@ -42,7 +22,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/FileUpload.htm", htmlStringData);
     }
     else {
-        LogMessage(LogLevel::INFO, "Session not available,Login before starting uploading");
+        LogMessage(LogLevel::INFO, "Session not available,please login...");
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/WelcomePageAjax.htm", htmlStringData);
     }
     
@@ -116,17 +96,17 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
     // Read user registration from the parsed userRegData and assign it to the UsersTableData
     SQLLiteDBManager::UsersTableData usersData;
     usersData.userName           =  m_httpStreamHandler.UrlDecode(userRegData.at("username"));
-    usersData.userPassword       = m_httpStreamHandler.UrlDecode(userRegData.at("password"));
+    usersData.userPassword       =  m_httpStreamHandler.UrlDecode(userRegData.at("password"));
 
     // verify in db, with the user information provided
     verifyUser  =  m_sqlLiteDBManager.verifyUserInformation(usersData);
 
     if (verifyUser) {
-        LogMessage(LogLevel::ERROR_R, "Login Success");
+        LogMessage(LogLevel::INFO, "Login Success");
         // create sessionID for this user and send the sessionID in response
         std::string sessionID = m_sessionMgr.CreateSession(usersData.userName);
         if (!sessionID.empty()) {
-            LogMessage(LogLevel::ERROR_R, "Session Created for the User - ", usersData.userName);
+            LogMessage(LogLevel::INFO, "Session Created for the User - ", usersData.userName);
             response.headers.insert(std::make_pair("Set-Cookie: session_id=", sessionID));
         }
 
@@ -174,6 +154,12 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
     LogMessage(LogLevel::INFO, __func__);
     LogMessage(LogLevel::DEBUG, "handleFileUpload got called,Request details :",request.body);
 
+    bool sessionAvailable = checkIfSessionExists(request);
+
+    if (!sessionAvailable) {
+        return handleWelcomePage(request);
+    }
+        
     // Default filename and file type
     std::string filename = "default_filename.pdf";
     std::string filetype = "application/pdf";
@@ -210,41 +196,42 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
     }
 
     LogMessage(LogLevel::INFO,"FileName = " , filename);
-    int ret = saveFile(filename,request.body);
+    int ret = HelperMethods::saveFile(filename,request.body);
     if( ret == 0 ) {
         response.statusCode       =   HttpStreamHandler::httpStatusCodes::OK;
         response.statusMessage    =   "OK";
         response.body             =   "File successfully saved";
     }
     else {
-        response.statusCode = HttpStreamHandler::httpStatusCodes::FAIL;
+        response.statusCode = HttpStreamHandler::httpStatusCodes::OK;
         response.statusMessage = "File saving failed";
         response.body = " Error is saving file ";
     }
     return response;
 }
 
-int HttpRouteCallBackHandler::saveFile(const std::string& filename, const std::string& fileData) {
-    std::ofstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        file.write(fileData.c_str(), fileData.size());
-        file.close();
-        LogMessage(LogLevel::INFO, "File saved as ", filename);
-    } else {
-        LogMessage(LogLevel::ERROR_R, "Failed to open file for writing, filename = ", filename);
-    	return -1;
-    }
-    return 0;
-}
+bool HttpRouteCallBackHandler::checkIfSessionExists(HttpStreamHandler::HttpRequest request)
+{
+    std::string sessionIDCookie;
 
-std::string HttpRouteCallBackHandler::getFilenameFromHeaders(const std::string& headers) {
-    // Extract filename from headers (for demonstration, we'll assume it's in a header)
-    std::string filename = "uploaded_file.bin";  // Default filename
-    size_t pos = headers.find("filename=");
-    if (pos != std::string::npos) {
-        size_t start = pos + 9; // Length of "filename="
-        size_t end = headers.find("\r\n", start);
-        filename = headers.substr(start, end - start);
+    // String to search for
+    std::string searchString = "Cookie";
+
+    // Find the pair with the given value in the vector
+    auto it = std::find_if(request.headers.begin(), request.headers.end(), [&](const auto& pair) {
+        return pair.first == searchString;
+    });
+
+    if (it != request.headers.end()) {
+        sessionIDCookie = it->second;
     }
-    return filename;
+
+    std::string sessionID = m_httpStreamHandler.extractSessionIDFromCookie(sessionIDCookie);
+
+    bool sessionAvailable = false;
+    if (!sessionID.empty()) {
+        sessionID.pop_back();
+        sessionAvailable = m_sessionMgr.isSessionAvailable(sessionID);
+    }
+    return sessionAvailable;
 }
