@@ -161,51 +161,44 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
     }
         
     // Default filename and file type
-    std::string filename = "default_filename.pdf";
-    std::string filetype = "application/pdf";
-
-    // Function to search headers for a given key
-    auto findHeader = [&](const std::string& key) -> std::string {
-        for (const auto& header : request.headers) {
-            if (header.first == key) {
-                return header.second;
-            }
-        }
-        return "";
-    };
+    std::string filename = "uploaded_";
+    std::string filetype = "application/octet-stream";
 
     // Extract Content-Disposition header
-    std::string contentDisposition = findHeader("Content-Disposition");
-    if (!contentDisposition.empty()) {
-        size_t filenamePos = contentDisposition.find("filename=");
-        if (filenamePos != std::string::npos) {
-            filename = contentDisposition.substr(filenamePos + 9); // Extract after "filename="
-
-            LogMessage(LogLevel::INFO,"Before Trim=",filename);
-            // Remove any surrounding double quotes from filename
-            if (filename.front() == '"' && filename.back() == '"') {
-                filename = filename.substr(1, filename.size() - 2);
+    auto it = request.headers.find("Content-Disposition");
+    if (it != request.headers.end()) {
+        std::string contentDisposition = it->second;
+        if (!contentDisposition.empty()) {
+            size_t filenamePos = contentDisposition.find("filename=");
+            if (filenamePos != std::string::npos) {
+                // getFilename
+                filename = contentDisposition.substr(filenamePos + 9); // Extract after "filename="
+                LogMessage(LogLevel::INFO, "Before Trim,FileName=", filename);
+                // Remove any surrounding double quotes from filename
+                if (filename.front() == '"' && filename.back() == '"') {
+                    filename = filename.substr(1, filename.size() - 2);
+                }
             }
         }
     }
 
-    // Extract Content-Type header
-    filetype = findHeader("Content-Type");
-    if (filetype.empty()) {
-        filetype = "application/octet-stream"; // Default if not provided
+    it = request.headers.find("Content-Type");
+    if ( it != request.headers.end() ) {
+        // Extract Content-Type header
+        filetype = it->second;
     }
 
     LogMessage(LogLevel::INFO,"FileName = " , filename);
+    LogMessage(LogLevel::INFO, "FileType = ", filetype);
+
     int ret = HelperMethods::saveFile(filename,request.body);
-    if( ret == 0 ) {
-        response.statusCode       =   HttpStreamHandler::httpStatusCodes::OK;
-        response.statusMessage    =   "OK";
-        response.body             =   "File successfully saved";
+    if (ret == 0) {
+        response.statusCode = HttpStreamHandler::httpStatusCodes::OK;
+        response.statusMessage = "File successfully saved";
     }
     else {
-        response.statusCode = HttpStreamHandler::httpStatusCodes::OK;
+        response.statusCode = HttpStreamHandler::httpStatusCodes::FAIL;
         response.statusMessage = "File saving failed";
-        response.body = " Error is saving file ";
     }
     return response;
 }

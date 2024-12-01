@@ -4,6 +4,5 @@
 
 class HelperMethods {
 public:
-	static int saveFile(const std::string& filename, const std::string& fileData);
-	static std::string getFilenameFromHeaders(const std::string& headers);
+	static int saveFile(std::string& fileName, std::string& fileData, std::string directory = "Uploaded_Files");
 };

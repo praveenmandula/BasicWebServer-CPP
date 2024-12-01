@@ -51,7 +51,7 @@ HttpStreamHandler::HttpRequest HttpStreamHandler::parseHttpRequest(const std::st
         if (pos != std::string::npos) {
             std::string headerName = line.substr(0, pos);
             std::string headerValue = line.substr(pos + 2); // Skip ": " after the colon
-            request.headers.push_back({ headerName, headerValue });
+            request.headers[headerName] = headerValue; // Insert into the map
         }
     }
 

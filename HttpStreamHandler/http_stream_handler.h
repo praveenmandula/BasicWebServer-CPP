@@ -18,7 +18,7 @@ public:
         std::string method;
         std::string path;
         std::string version;
-        std::vector<std::pair<std::string, std::string>> headers;
+        std::unordered_map<std::string, std::string> headers; // Key-value map for headers
         std::string body;
     };
 

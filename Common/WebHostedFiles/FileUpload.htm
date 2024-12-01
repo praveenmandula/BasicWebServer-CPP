@@ -4,15 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 1em;
+        }
+
+        input[type="file"] {
+            margin-bottom: 1em;
+        }
+
+        #statusMessage {
+            margin-top: 1em;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
     <h2>Upload a File</h2>
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload">
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" id="fileToUpload" required>
         <input type="submit" value="Upload File" name="submit">
     </form>
+
+    <div id="statusMessage"></div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+            const statusMessage = document.getElementById("statusMessage");
+
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Define the callback for when the request completes
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        statusMessage.textContent = "File uploaded successfully!";
+                        statusMessage.className = "success";
+                    } else {
+                        statusMessage.textContent = `File upload failed: ${xhr.responseText}`;
+                        statusMessage.className = "error";
+                    }
+                }
+            };
+
+            // Handle network errors
+            xhr.onerror = function () {
+                statusMessage.textContent = "An error occurred during the upload.";
+                statusMessage.className = "error";
+            };
+
+            // Open the request and send the form data
+            xhr.open("POST", "/upload", true);
+            xhr.send(formData);
+        });
+    </script>
 
 </body>
 </html>
