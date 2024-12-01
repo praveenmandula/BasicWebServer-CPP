@@ -17,14 +17,15 @@ Project Details
 
 6) TcpSocketHandler   --  Used for low level socket communication , receives and sends data on the socket
 
-Steps to Build and Run
-----------------------
+
+Steps to Build
+--------------
 
 Windows
 -------
-1) Open BasicWebServer-CPP/BasicWebServer.sln ( VisualStudio 2022 required ) ( Compiling with c++20 )
+1) Open BasicWebServer-CPP/BasicWebServer.sln ( VisualStudio 2022 required ) ( Compiling with C++20 )
 2) Select Debug/Relase , x64
-3) Build Solution, once it succeed, post build event will copies Config,WebHostedFiles folders from Common directory to Build Output Directory
+3) Build Solution, once it get succeeded, post build event will copy Config,WebHostedFiles folders from Common directory to Build Output Directory ( Debug or Release - where exe will get generate )
 
 Linux
 ------
@@ -38,7 +39,6 @@ Steps to Run
 								OR 
   From Command prompt, Navigate to Build output directory, Run - BasicWebServer.exe 8085 ( port num can be configured )
   
-2) Open Browser -> http://localhost/8085 , Login page will come, First time user please Register, next Login
+2) Open Browser -> http://localhost:8085 , Login page will come, First time user please Register, next Login
 
-3) Once login succeed, Upload page will get load, you can upload any file and it saves into the Server
-
+3) Once login succeeded, Upload page will get loaded, you can upload any file and it saves into the Server
