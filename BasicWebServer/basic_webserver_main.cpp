@@ -1,7 +1,7 @@
 /*
  * Author: Praveen Mandula
  * Date: 11/25/2024
- * Description : BasicWebServer main method - creates webserver and servers incoming requests
+ * Description : BasicWebServer main method - creates webserver and serves incoming requests from the clients
  */
 #include "basic_webserver.h"
 
