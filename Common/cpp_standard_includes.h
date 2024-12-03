@@ -36,3 +36,6 @@
 #include <mutex>
 #include <condition_variable>
 #include <future>
+
+// regex
+#include <regex>

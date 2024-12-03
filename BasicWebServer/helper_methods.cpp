@@ -1,6 +1,6 @@
 #include "helper_methods.h"
 
-int HelperMethods::saveFile(std::string& fileName, std::string& fileData, std::string directory)
+int HelperMethods::saveFile(std::string& fileName, std::string& fileType, std::string& fileData, std::string directory)
 {
     namespace fs = std::filesystem;
 
@@ -14,7 +14,7 @@ int HelperMethods::saveFile(std::string& fileName, std::string& fileData, std::s
         }
 
         // Construct the full file path
-        fs::path filePath = fs::path(directory) / ( fileName + "test" );
+        fs::path filePath = fs::path(directory) / ( fileName );
 
         // Open the file in binary mode
         std::ofstream file(filePath, std::ios::binary | std::ios::out);

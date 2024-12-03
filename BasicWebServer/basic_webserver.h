@@ -45,8 +45,8 @@ private:
 	// Handles parsing and generating http streams
 	HttpStreamHandler m_httpStreamHandler;
 
-	// Main asyncronous thread which will get invoked whenever there is new request from client
-	// And reads the client data,converts to user defined httpRequest and will callback
-	// appropriate callback handler and response will send back to the client
+	// Main asynchronous thread which will get invoked whenever there is new request from client
+	// And reads the client data,converts to user defined HttpRequest and will callback
+	// appropriate registered callback handler and response will send back to the client
 	void handleClientRequest(SOCKET clientSocket);
 };

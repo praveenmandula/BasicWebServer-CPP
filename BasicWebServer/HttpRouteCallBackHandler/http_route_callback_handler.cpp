@@ -160,38 +160,38 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
         return handleWelcomePage(request);
     }
         
-    // Default filename and file type
+    // Default filenames and file type
     std::string filename = "uploaded_";
     std::string filetype = "application/octet-stream";
+    std::string fileData;
 
-    // Extract Content-Disposition header
-    auto it = request.headers.find("Content-Disposition");
-    if (it != request.headers.end()) {
-        std::string contentDisposition = it->second;
-        if (!contentDisposition.empty()) {
-            size_t filenamePos = contentDisposition.find("filename=");
-            if (filenamePos != std::string::npos) {
-                // getFilename
-                filename = contentDisposition.substr(filenamePos + 9); // Extract after "filename="
-                LogMessage(LogLevel::INFO, "Before Trim,FileName=", filename);
-                // Remove any surrounding double quotes from filename
-                if (filename.front() == '"' && filename.back() == '"') {
-                    filename = filename.substr(1, filename.size() - 2);
-                }
-            }
-        }
+    // Regular expression to extract filename
+    std::regex filenameRegex(R"(filename=\"([^\"]+)\")");
+    std::smatch filenameMatch;
+    if (std::regex_search(request.body, filenameMatch, filenameRegex)) {
+        filename = filenameMatch[1];  // Extract filename
     }
 
-    it = request.headers.find("Content-Type");
-    if ( it != request.headers.end() ) {
-        // Extract Content-Type header
-        filetype = it->second;
+    // Regular expression to extract content type (filetype)
+    std::regex contentTypeRegex(R"(Content-Type:\s*([^\s]+))");
+    std::smatch contentTypeMatch;
+    if (std::regex_search(request.body, contentTypeMatch, contentTypeRegex)) {
+        filetype = contentTypeMatch[1];  // Extract content type
     }
 
-    LogMessage(LogLevel::INFO,"FileName = " , filename);
+    // Regex pattern to match the content between two \n\n (empty lines)
+    std::regex fileDataPattern(R"(\r?\n\r?\n([\s\S]*?)\r?\n\r?\n)");
+    // Perform the regex match
+    std::smatch fileDatamatch;
+    if (std::regex_search(request.body, fileDatamatch, fileDataPattern)) {
+        // The first captured group (index 1) contains the file data (body)
+        fileData = fileDatamatch[1].str();
+    }
+
+    LogMessage(LogLevel::INFO, "FileName = " , filename);
     LogMessage(LogLevel::INFO, "FileType = ", filetype);
 
-    int ret = HelperMethods::saveFile(filename,request.body);
+    int ret = HelperMethods::saveFile(filename, filetype, fileData);
     if (ret == 0) {
         response.statusCode = HttpStreamHandler::httpStatusCodes::OK;
         response.statusMessage = "File successfully saved";
