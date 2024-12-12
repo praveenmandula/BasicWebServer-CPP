@@ -12,13 +12,13 @@
 class HttpRouteCallBackHandler {
 public:
 	// Define and implement callback method for requested http routes
-	HttpStreamHandler::HttpResponse handleWelcomePage(HttpStreamHandler::HttpRequest request);
-	HttpStreamHandler::HttpResponse handleUserRegistration(HttpStreamHandler::HttpRequest request);
-	HttpStreamHandler::HttpResponse handleUserLogin(HttpStreamHandler::HttpRequest request);
-	HttpStreamHandler::HttpResponse handleFileUpload(HttpStreamHandler::HttpRequest request);
+	HttpStreamHandler::HttpResponse handleWelcomePage(HttpStreamHandler::HttpRequest& request);
+	HttpStreamHandler::HttpResponse handleUserRegistration(HttpStreamHandler::HttpRequest& request);
+	HttpStreamHandler::HttpResponse handleUserLogin(HttpStreamHandler::HttpRequest& request);
+	HttpStreamHandler::HttpResponse handleFileUpload(HttpStreamHandler::HttpRequest& request);
 
 private:
-	bool checkIfSessionExists(HttpStreamHandler::HttpRequest request);
+	bool checkIfSessionExists(HttpStreamHandler::HttpRequest& request);
 
 	HtmlReader           m_htmlReader;
 	HttpStreamHandler    m_httpStreamHandler;

@@ -48,11 +48,39 @@
     <div id="statusMessage"></div>
 
     <script>
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+        const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "application/pdf","text/html"];
+
         document.getElementById("uploadForm").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent default form submission
 
-            const formData = new FormData(event.target);
+            const fileInput = document.getElementById("fileToUpload");
             const statusMessage = document.getElementById("statusMessage");
+            const file = fileInput.files[0];
+
+            // Check if a file is selected
+            if (!file) {
+                statusMessage.textContent = "No file selected. Please choose a file.";
+                statusMessage.className = "error";
+                return;
+            }
+
+            // Check file size
+            if (file.size > MAX_FILE_SIZE) {
+                statusMessage.textContent = `File size exceeds the maximum limit of ${MAX_FILE_SIZE / (1024 * 1024)} MB.`;
+                statusMessage.className = "error";
+                return;
+            }
+
+            // Check file type
+            if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+                statusMessage.textContent = "Invalid file type. Allowed types are: JPEG, PNG, and PDF.";
+                statusMessage.className = "error";
+                return;
+            }
+
+            // File validation passed, proceed with upload
+            const formData = new FormData(event.target);
 
             // Create a new XMLHttpRequest object
             const xhr = new XMLHttpRequest();

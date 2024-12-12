@@ -29,7 +29,7 @@ public:
 
         std::string body;
         HttpResponse() {
-            statusCode = 0;
+            statusCode = httpStatusCodes::OK;
             headers.insert({ "Content-Type", "text/plain" });
             headers.insert({ "Server", "MyServer/1.0" });
             headers.insert({ "Access-Control-Allow-Origin", "*" });

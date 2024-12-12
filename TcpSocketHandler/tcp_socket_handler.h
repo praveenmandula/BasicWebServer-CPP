@@ -15,7 +15,7 @@
 #define SOCKET_ERROR -1
 #endif
 
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 8192
 
 class TcpSocketHandler {
 public:

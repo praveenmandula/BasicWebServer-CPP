@@ -5,7 +5,7 @@
  */
 #include "http_route_callback_handler.h"
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(HttpStreamHandler::HttpRequest& request)
 {
     HttpStreamHandler::HttpResponse response;
     std::string htmlStringData;
@@ -18,11 +18,11 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
 
     // if sessionAvailable No Need to send login page, directly send WelcomePage
     if (sessionAvailable) {
-        LogMessage(LogLevel::INFO, "Session available,Skipping login");
+        LogMessage(LogLevel::INFO, "Session available,Skipping Login");
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/FileUpload.htm", htmlStringData);
     }
     else {
-        LogMessage(LogLevel::INFO, "Session not available,please login...");
+        LogMessage(LogLevel::INFO, "Session not available,Please Login");
         ret = m_htmlReader.readHtmlContentFromFile("WebHostedFiles/WelcomePageAjax.htm", htmlStringData);
     }
     
@@ -49,7 +49,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleWelcomePage(Http
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserRegistration(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserRegistration(HttpStreamHandler::HttpRequest& request)
 {
     HttpStreamHandler::HttpResponse response;
 
@@ -79,7 +79,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserRegistration
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpStreamHandler::HttpRequest& request)
 {
     HttpStreamHandler::HttpResponse response; 
 
@@ -147,7 +147,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleUserLogin(HttpSt
     return response;
 }
 
-HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpStreamHandler::HttpRequest request)
+HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpStreamHandler::HttpRequest& request)
 {
     HttpStreamHandler::HttpResponse response;
     // Validate user login
@@ -159,6 +159,8 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
     if (!sessionAvailable) {
         return handleWelcomePage(request);
     }
+
+    LogMessage(LogLevel::INFO, "Received body length = ", request.body.length());
         
     // Default filenames and file type
     std::string filename = "uploaded_";
@@ -190,6 +192,7 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
 
     LogMessage(LogLevel::INFO, "FileName = " , filename);
     LogMessage(LogLevel::INFO, "FileType = ", filetype);
+    LogMessage(LogLevel::INFO, "FileDataRecvd, length = ", fileData.length());
 
     int ret = HelperMethods::saveFile(filename, filetype, fileData);
     if (ret == 0) {
@@ -203,14 +206,14 @@ HttpStreamHandler::HttpResponse HttpRouteCallBackHandler::handleFileUpload(HttpS
     return response;
 }
 
-bool HttpRouteCallBackHandler::checkIfSessionExists(HttpStreamHandler::HttpRequest request)
+bool HttpRouteCallBackHandler::checkIfSessionExists(HttpStreamHandler::HttpRequest& request)
 {
     std::string sessionIDCookie;
 
     // String to search for
     std::string searchString = "Cookie";
 
-    // Find the pair with the given value in the vector
+    // Find the pair with the given value in the map
     auto it = std::find_if(request.headers.begin(), request.headers.end(), [&](const auto& pair) {
         return pair.first == searchString;
     });

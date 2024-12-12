@@ -46,12 +46,13 @@ int TcpSocketHandler::recvDataOnSocket(SOCKET& socket,std::string& message)
         // Receive a chunk of data
         auto valread = recv(socket, buffer, BUFFER_SIZE, 0);
         if (valread == 0) {
+            LogMessage(LogLevel::ERROR_R, "Connection closed by server");
             // Connection closed by server
             break;
         }
         else if (valread < 0) {
             // Error during recv
-            perror("recv");
+            LogMessage(LogLevel::ERROR_R, "recv error - unable to receive data on socket");
             break;
         }
         else {
@@ -59,11 +60,14 @@ int TcpSocketHandler::recvDataOnSocket(SOCKET& socket,std::string& message)
             message.append(buffer, valread);
             // Check if all data has been received
             if (valread < BUFFER_SIZE) {
+                LogMessage(LogLevel::INFO, "Received complete data from server, length =",message.length());
                 // All data received
                 break;
             }
         }
     }
+
+    LogMessage(LogLevel::DEBUG, " Client data received = ", message);
     return 0;
 }
 
